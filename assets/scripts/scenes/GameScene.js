@@ -9,7 +9,17 @@ class GameScene extends Phaser.Scene {
         this.createBackground();
         this.player = new Player(this);
         this.enemies = new Enemies(this);
+        this.addOverlap();
     }
+
+    addOverlap() {
+        this.phisics.add.overlap(this.player.fires, this.enemies, this.onOverlap, undefined, this);
+    }
+
+    onOverlap() {
+        console.log('onOverlap');
+    }
+
     update() {
         this.player.move();
         this.bg.tilePositionX += 0.5;
