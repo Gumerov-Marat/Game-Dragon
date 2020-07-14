@@ -9,6 +9,7 @@ class GameScene extends Phaser.Scene {
         this.createBackground();
         this.player = new Player(this);
         this.enemies = new Enemies(this);
+        this.createCompleteEvents();
         this.addOverlap();
     }
 
@@ -23,6 +24,15 @@ class GameScene extends Phaser.Scene {
         target.setAlive(false);
     }
 
+    createCompleteEvents() {
+        this.player.once('killed', this.onComplete, this);
+        this.events.once('enemies-killed', this.onComplete, this);
+    }
+
+    onComplete() {
+        this.scene.start('Start');
+        console.log(1);
+    }
     update() {
         this.player.move();
         this.bg.tilePositionX += 0.5;
