@@ -8,11 +8,23 @@ class GameScene extends Phaser.Scene {
     }
     create() {
         this.createBackground();
+        console.log(this.sounds);
+        if (!this.sounds) {
+            this.createSounds();
+        }
         this.player = new Player(this);
         this.enemies = new Enemies(this);
         this.createCompleteEvents();
         this.addOverlap();
         this.createText();
+    }
+    createSounds() {
+        this.sounds = {
+            boom: this.sound.add('boom', {volume: 0.1}),
+            theme: this.sound.add('theme', {volume: 0.2, loop: true}) 
+        };
+
+        this.sounds.theme.play();
     }
     createText() {
         this.scoreText = this.add.text(50, 50, 'Score: 0', {
@@ -26,9 +38,12 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.enemies, this.onOverlap, undefined, this);
     }
     onOverlap(source, target) {
-        if (source !== this.player && target !== this.player) {
+        const enemy = [source, target].find(item => item.texture.key === 'enemy');
+        if (enemy) {
             ++this.score;
             this.scoreText.setText(`Score: ${this.score}`);
+            Boom.generate(this, enemy.x, enemy.y);
+            this.sounds.boom.play();
         }
         source.setAlive(false);
         target.setAlive(false);
