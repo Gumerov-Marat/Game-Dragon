@@ -1,2 +1,6 @@
-# Game-SideScrollingShooter
-Курс Разработка HTML5 игр на Phaser 3( игра Side-Scrolling-Shooter)
+# Game-Dragon
+---
+
+Course Development of HTML5 games on Phaser 3 (Side-Scrolling-Shooter game)
+
+link: https://gumerov-marat.github.io/Game-Dragon/
